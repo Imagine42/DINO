@@ -11,8 +11,11 @@
 #include <vector>
 
 #include <ATen/ATen.h>
-#include <ATen/cuda/CUDAContext.h>
+// CUDA 관련 헤더 파일을 제거합니다.
+// #include <ATen/cuda/CUDAContext.h>
 
+// 필요한 경우 다른 CPU 전용 헤더 파일을 추가합니다.
+// 예: #include <ATen/Parallel.h>
 
 at::Tensor
 ms_deform_attn_cpu_forward(

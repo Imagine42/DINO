@@ -16,9 +16,7 @@
 #include "cuda/ms_deform_attn_cuda.h"
 #endif
 
-
-at::Tensor
-ms_deform_attn_forward(
+inline at::Tensor ms_deform_attn_forward(
     const at::Tensor &value, 
     const at::Tensor &spatial_shapes,
     const at::Tensor &level_start_index,
@@ -26,7 +24,7 @@ ms_deform_attn_forward(
     const at::Tensor &attn_weight,
     const int im2col_step)
 {
-    if (value.type().is_cuda())
+    if (value.options().is_cuda())
     {
 #ifdef WITH_CUDA
         return ms_deform_attn_cuda_forward(

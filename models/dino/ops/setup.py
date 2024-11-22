@@ -33,9 +33,8 @@ def get_extensions():
     extra_compile_args = {"cxx": []}
     define_macros = []
 
-
-
     if torch.cuda.is_available() and CUDA_HOME is not None:
+        # CUDA 관련 코드 주석 처리
         extension = CUDAExtension
         sources += source_cuda
         define_macros += [("WITH_CUDA", None)]
@@ -45,8 +44,11 @@ def get_extensions():
             "-D__CUDA_NO_HALF_CONVERSIONS__",
             "-D__CUDA_NO_HALF2_OPERATORS__",
         ]
+        print("CUDA is not available. Compiling for CPU only.")
     else:
-        raise NotImplementedError('Cuda is not availabel')
+        print("CUDA is not available. Compiling for CPU only.")
+        extension = CppExtension
+        sources = main_file + source_cpu  # CUDA 소스는 제외
 
     sources = [os.path.join(extensions_dir, s) for s in sources]
     include_dirs = [extensions_dir]
